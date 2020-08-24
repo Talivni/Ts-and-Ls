@@ -11,7 +11,7 @@ headers = ["Mturk_ID", "cohort", "training1_success", "training1_time", "trainin
            "game5_success", "game5_time", "game5_sum_identified", "game5_success_rate", "game5_success_distance", "game5_ca_agreed", "game6_success", "game6_time", "game6_sum_identified", "game6_success_rate", "game6_success_distance", "game6_ca_agreed",
            "game7_success", "game7_time", "game7_sum_identified", "game7_success_rate", "game7_success_distance", "game7_ca_agreed", "game8_success", "game8_time", "game8_sum_identified", "game8_success_rate", "game8_success_distance", "game8_ca_agreed",
            "game9_success", "game9_time", "game9_sum_identified", "game9_success_rate", "game9_success_distance", "game9_ca_agreed", "game10_success", "game10_time", "game10_sum_identified", "game10_success_rate", "game10_success_distance", "game10_ca_agreed",
-           "game_sum_success_total", "total_time", "average_game_time", "game_sum_ca_agreed_total", "game_sum_agreed_ca_correct", "game_sum_agreed_ca_wrong", "game_sum_disagreed_ca_correct", "game_sum_disagreed_ca_wrong_success", "game_sum_disagreed_ca_wrong_failure", "avg_task_load", "avg_trust", "avg_explanation"]
+           "game_sum_success_total", "total_time", "average_game_time", "game_sum_ca_agreed_total", "game_sum_agreed_ca_right", "game_sum_agreed_ca_wrong", "game_sum_disagreed_ca_right", "game_sum_disagreed_ca_wrong_success", "game_sum_disagreed_ca_wrong_failure", "avg_task_load", "avg_trust", "avg_explanation"]
 
 
 cohort_game_col = {('1', 1): ['Game_C1_Q1_1_1', 'Game_C1_Q1_1_2', 'Game_C1_Q1_1_3', 'Game_C1_Q1_1_4', 'Game_C1_Q1_1_5', 'Game_C1_Q1_1_6', 'Game_C1_Q1_1_7', 'Game_C1_Q1_1_8'],
@@ -90,9 +90,9 @@ cohort_training_col = {('1', 1): ["Training_C1_Q1_1_1", "Training_C1_Q1_1_2", "T
 
 time_game_col = {'1': ["Game_C1_Q1_time_Page Submit", "Game_C1_Q2_time_Page Submit", "Game_C1_Q3_time_Page Submit", "Game_C1_Q4_time_Page Submit", "Game_C1_Q5_time_Page Submit", "Game_C1_Q6_time_Page Submit", "Game_C1_Q7_time_Page Submit", "Game_C1_Q8_time_Page Submit", "Game_C1_Q9_time_Page Submit", "Cohort1_Q10_time_Page Submit"],
                  '2': ["Game_C24_Q1_time_Page Submit", "Game_C24_Q2_time_Page Submit", "Game_C24_Q3_time_Page Submit", "Game_C24_Q4_time_Page Submit", "Game_C24_Q5_time_Page Submit", "Game_C24_Q6_time_Page Submit", "Game_C24_Q7_time_Page Submit", "Game_C24_Q8_time_Page Submit", "Game_C24_Q9_time_Page Submit", "Cohort24_Q10_time_Page Submit"],
-                 '3': ["Game_C35_Q1_time_Page Submit", "Game_C35_Q2_time_Page Submit", "Game_C35_Q3_time_Page Submit", "Game_C35_Q4_time_Page Submit", "Game_C35_Q5_time_Page Submit", "Game_C35_Q6_time_Page Submit", "Game_C35_Q7_time_Page Submit", "Game_C35_Q8_time_Page Submit", "Game_C35_Q9_time_Page Submit", "Game_C35_Q10_time_Page Submit"],
+                 '3': ["Game_C35_Q1_time_Page Submit", "Game_C35_Q2_time_Page Submit", "Game_C35_Q3_time_Page Submit", "Game_C35_Q4_time_Page Submit", "Game_C35_Q5_time_Page Submit", "Game_C35_Q6_time_Page Submit", "Game_C35_Q7_time_Page Submit", "Game_C35_Q8_time_Page Submit", "Game_C35_Q9_time_Page Submit", "Cohort35_Q10_time_Page Submit"],
                  '4': ["Game_C24_Q1_time_Page Submit", "Game_C24_Q2_time_Page Submit", "Game_C24_Q3_time_Page Submit", "Game_C24_Q4_time_Page Submit", "Game_C24_Q5_time_Page Submit", "Game_C24_Q6_time_Page Submit", "Game_C24_Q7_time_Page Submit", "Game_C24_Q8_time_Page Submit", "Game_C24_Q9_time_Page Submit", "Cohort24_Q10_time_Page Submit"],
-                 '5': ["Game_C35_Q1_time_Page Submit", "Game_C35_Q2_time_Page Submit", "Game_C35_Q3_time_Page Submit", "Game_C35_Q4_time_Page Submit", "Game_C35_Q5_time_Page Submit", "Game_C35_Q6_time_Page Submit", "Game_C35_Q7_time_Page Submit", "Game_C35_Q8_time_Page Submit", "Game_C35_Q9_time_Page Submit", "Game_C35_Q10_time_Page Submit"]}
+                 '5': ["Game_C35_Q1_time_Page Submit", "Game_C35_Q2_time_Page Submit", "Game_C35_Q3_time_Page Submit", "Game_C35_Q4_time_Page Submit", "Game_C35_Q5_time_Page Submit", "Game_C35_Q6_time_Page Submit", "Game_C35_Q7_time_Page Submit", "Game_C35_Q8_time_Page Submit", "Game_C35_Q9_time_Page Submit", "Cohort35_Q10_time_Page Submit"]}
 
 
 time_training_col = {'1': ["Training_C1_Q1_time_Page Submit", "Training_C1_Q2_time_Page Submit", "Training_C1_Q3_time_Page Submit", "Training_C1_Q4_time_Page Submit"],
@@ -158,8 +158,8 @@ def correct_rate(data):
 This function Arranges and writes the data into a CSV in the following format:
 1. Mturk_ID, cohort - participants Mturk ID and cohort number (1-5)
 2. Training- for each question:
-   a. Whether   or not (boolean)
-   b. Time it took
+   a. trainingX_success - whether succeded or not (boolean)
+   b. trainingX_time - time it took
    And overall success rate (out of 4 questions)
 3. Game - for each question:
    a. gameX_success - Whether succeded or not (boolean)
@@ -168,29 +168,91 @@ This function Arranges and writes the data into a CSV in the following format:
    d. gameX_success_rate - how many symbols quantities (out of 8) were identified correctly
    e. gameX_success_distance - how distant is the participant answer from the correct answer (in Manhattan Distance) to estimate the proximity of the answer to the right answer.
    f. gameX_ca_agreed - whether agreed with CA or not (boolean)
-4. Game success in total - how many correct answers the participant get in total
-5. Total time - total time the participant spend in qualtrics (for MTurk compensation)
-6. Average game time - how much time each question took in average
-7. 
+4. game_sum_success_total - how many correct answers the participant get in total
+5. total_time - total time the participant spend in qualtrics (for MTurk compensation)
+6. average_game_time - average time the participant spend in the 10 game questions 
+7. game_sum_ca_agreed_total - How many times the participant agreed with the CA, in total
+8. game_sum_agreed_ca_right - How many times the participant agreed with the CA, when CA was right
+9. game_sum_agreed_ca_wrong - How many times the participant agreed with the CA, when CA was wrong
+10. game_sum_disagreed_ca_right- How many times the participant disagreed with the CA, when CA was right
+11. game_sum_disagreed_ca_wrong_success - How many times the participant disagreed with the CA, when CA was wrong, and the participant answered correctly
+12. game_sum_disagreed_ca_wrong_failure - How many times the participant disagreed with the CA, when CA was wrong, and the participant answered incorrectly
+13. Questionnaires  -
+    a. avg_task_load - Average grade of task load questions
+    b. avg_trust - Average grade of CA trust questionnaire  (relevant to cohort 2-5)
+    c. avg_explanation - Average grade of explanation satisfaction questionnaire  (relevant to cohort 3-5)
 """
 def arrange_csv(data):
-   df_csv = []
+   rows = []
+   rows.append(headers)
+   
    for i in range(len(data)):
       row = data.iloc[i, :]
       case = str(row['cohort_num'])
       new_row = [row['MTurk'], row['cohort_num']]
       training_success = 0
-      game_success = 0
+
       for qnum in range(1, 5): #Adding training section
-         answer = [int(row[cohort_training_col[(case, qnum)][i]]) for i in range (8)]
+         answer = [int(row[cohort_training_col[(case, qnum)][i]]) for i in range(8)]
          new_row.append(sol_training[qnum] == answer)
          training_success += (sol_training[qnum] == answer)
          new_row.append(round(row[time_training_col[case][qnum - 1]], 2))
 
-      new_row.append(training_success) #adding overall success in training
+      new_row.append(training_success) #adding overall training success
+      sum_game_success = 0
+      sum_ca_agreed = 0
+      sum_ca_agreed_right = 0
+      sum_ca_agreed_wrong = 0
+      sum_ca_disagreed_right = 0
+      sum_ca_disagreed_wrong_success = 0
+      sum_ca_disagreed_wrong_failure = 0
+      total_game_time = 0
+      bool_ca_right = False
 
-      
-      print(new_row)
+      for qnum in range(1, 11): #adding game section
+          if qnum == 7: #CA is right in Q7-Q10
+              bool_ca_right = True
+
+          answer = [int(row[cohort_game_col[(case, qnum)][i]]) for i in range (8)]
+          solution = sol_game[qnum] 
+          new_row.append(solution == answer) #append 3a
+          game_success = int(solution == answer)
+          sum_game_success += (game_success)
+
+          game_time = round(row[time_game_col[case][qnum -1]], 2)
+          total_game_time += game_time
+          new_row.append(game_time) #append 3b
+         
+          new_row.append(sum(answer)) #append 3c
+          new_row.append(sum(x==y for x, y in zip(answer, solution))) #append 3d
+          new_row.append(sum(abs(np.array(answer) - np.array(solution)))) #append 3e
+          new_row.append(CA_game[qnum] == answer) #append 3f
+        
+          ca_agreed = int(CA_game[qnum] == answer)
+          sum_ca_agreed += ca_agreed
+          sum_ca_agreed_right += (ca_agreed and bool_ca_right)
+          sum_ca_agreed_wrong += (ca_agreed and (not bool_ca_right))
+          sum_ca_disagreed_right += ((not ca_agreed) and bool_ca_right)
+          sum_ca_disagreed_wrong_success += ((not ca_agreed) and (not bool_ca_right) and game_success)
+          sum_ca_disagreed_wrong_failure += ((not ca_agreed) and (not bool_ca_right) and (not game_success))
+
+      new_row.append(sum_game_success) #append 4
+      new_row.append(row['Duration (in seconds)']) #append 5
+      new_row.append(total_game_time/10) #append 6
+      new_row.append(sum_ca_agreed) #append 7
+      new_row.append(sum_ca_agreed_right) #append 8
+      new_row.append(sum_ca_agreed_wrong) #append 9
+      new_row.append(sum_ca_disagreed_right) #append 10
+      new_row.append(sum_ca_disagreed_wrong_success) #append 11
+      new_row.append(sum_ca_disagreed_wrong_failure) #append 12
+      new_row.append(row['avg_task_load']) #append 13
+      new_row.append(row['avg_trust'])
+      new_row.append(row['avg_explanation'])
+
+      rows.append(new_row)
+
+   table = pd.DataFrame(rows)
+   table.to_csv("arrangedData.csv", header = False, index = False)
 
 arrange_csv(data)
 #correct_rate(data)
