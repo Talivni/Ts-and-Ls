@@ -3,14 +3,22 @@ import pandas as pd
 import re
 import matplotlib.pyplot as plt
 
-data = pd.read_csv("C:\\Users\\talil\\OneDrive\\Documents\\GitHub\\Ts-and-Ls\\ver3.csv")
+data = pd.read_csv("C:\\Users\\talil\\OneDrive\\Documents\\GitHub\\Ts-and-Ls\\ver4.csv")
 
-headers = ["Mturk_ID", "cohort", "training1_success", "training1_time", "training2_success", "training_2_time", "training3_success", "training3_time", "training4_success", "training4_time", "training_sum_success",
-           "game1_success", "game1_time", "game1_sum_identified", "game1_success_rate", "game1_success_distance", "game1_ca_agreed", "game2_success", "game2_time", "game2_sum_identified", "game2_success_rate", "game2_success_distance", "game2_ca_agreed",
-           "game3_success", "game3_time", "game3_sum_identified", "game3_success_rate", "game3_success_distance", "game3_ca_agreed", "game4_success", "game4_time", "game4_sum_identified", "game4_success_rate", "game4_success_distance", "game4_ca_agreed",
-           "game5_success", "game5_time", "game5_sum_identified", "game5_success_rate", "game5_success_distance", "game5_ca_agreed", "game6_success", "game6_time", "game6_sum_identified", "game6_success_rate", "game6_success_distance", "game6_ca_agreed",
-           "game7_success", "game7_time", "game7_sum_identified", "game7_success_rate", "game7_success_distance", "game7_ca_agreed", "game8_success", "game8_time", "game8_sum_identified", "game8_success_rate", "game8_success_distance", "game8_ca_agreed",
-           "game9_success", "game9_time", "game9_sum_identified", "game9_success_rate", "game9_success_distance", "game9_ca_agreed", "game10_success", "game10_time", "game10_sum_identified", "game10_success_rate", "game10_success_distance", "game10_ca_agreed",
+headers = ["Mturk_ID", "cohort", "consent", "gender", "age", "training1_success", "training1_time", "training1_dist_C", "training1_dist_E", "training1_dist_F", "training1_dist_L", "training1_dist_M", "training1_dist_N", "training1_dist_O", "training1_dist_T", "training1_sum_distance",
+           "training2_success", "training2_time", "training2_dist_C", "training2_dist_E", "training2_dist_F", "training2_dist_L", "training2_dist_M", "training2_dist_N", "training2_dist_O", "training2_dist_T", "training2_sum_distance",
+           "training3_success", "training3_time", "training3_dist_C", "training3_dist_E", "training3_dist_F", "training3_dist_L", "training3_dist_M", "training3_dist_N", "training3_dist_O", "training3_dist_T", "training3_sum_distance",
+           "training4_success", "training4_time", "training4_dist_C", "training4_dist_E", "training4_dist_F", "training4_dist_L", "training4_dist_M", "training4_dist_N", "training4_dist_O", "training4_dist_T", "training4_sum_distance", "training_sum_success",
+           "game1_success", "game1_time", "game1_sum_identified", "game1_success_rate", "game1_dist_C", "game1_dist_E", "game1_dist_F", "game1_dist_L", "game1_dist_M", "game1_dist_N", "game1_dist_O", "game1_dist_T", "game1_sum_distance", "game1_ca_agreed",
+           "game2_success", "game2_time", "game2_sum_identified", "game2_success_rate", "game2_dist_C", "game2_dist_E", "game2_dist_F", "game2_dist_L", "game2_dist_M", "game2_dist_N", "game2_dist_O", "game2_dist_T", "game2_sum_distance", "game2_ca_agreed",
+           "game3_success", "game3_time", "game3_sum_identified", "game3_success_rate", "game3_dist_C", "game3_dist_E", "game3_dist_F", "game3_dist_L", "game3_dist_M", "game3_dist_N", "game3_dist_O", "game3_dist_T", "game3_sum_distance", "game3_ca_agreed",
+           "game4_success", "game4_time", "game4_sum_identified", "game4_success_rate", "game4_dist_C", "game4_dist_E", "game4_dist_F", "game4_dist_L", "game4_dist_M", "game4_dist_N", "game4_dist_O", "game4_dist_T", "game4_sum_distance", "game4_ca_agreed",
+           "game5_success", "game5_time", "game5_sum_identified", "game5_success_rate", "game5_dist_C", "game5_dist_E", "game5_dist_F", "game5_dist_L", "game5_dist_M", "game5_dist_N", "game5_dist_O", "game5_dist_T", "game5_sum_distance", "game5_ca_agreed",
+           "game6_success", "game6_time", "game6_sum_identified", "game6_success_rate", "game6_dist_C", "game6_dist_E", "game6_dist_F", "game6_dist_L", "game6_dist_M", "game6_dist_N", "game6_dist_O", "game6_dist_T", "game6_sum_distance", "game6_ca_agreed",
+           "game7_success", "game7_time", "game7_sum_identified", "game7_success_rate", "game7_dist_C", "game7_dist_E", "game7_dist_F", "game7_dist_L", "game7_dist_M", "game7_dist_N", "game7_dist_O", "game7_dist_T", "game7_sum_distance", "game7_ca_agreed",
+           "game8_success", "game8_time", "game8_sum_identified", "game8_success_rate", "game8_dist_C", "game8_dist_E", "game8_dist_F", "game8_dist_L", "game8_dist_M", "game8_dist_N", "game8_dist_O", "game8_dist_T", "game8_sum_distance", "game8_ca_agreed",
+           "game9_success", "game9_time", "game9_sum_identified", "game9_success_rate", "game9_dist_C", "game9_dist_E", "game9_dist_F", "game9_dist_L", "game9_dist_M", "game9_dist_N", "game9_dist_O", "game9_dist_T", "game9_sum_distance", "game9_ca_agreed",
+           "game10_success", "game10_time", "game10_sum_identified", "game10_success_rate", "game10_dist_C", "game10_dist_E", "game10_dist_F", "game10_dist_L", "game10_dist_M", "game10_dist_N", "game10_dist_O", "game10_dist_T", "game10_sum_distance", "game10_ca_agreed",
            "game_sum_success_total", "total_time", "average_game_time", "game_sum_ca_agreed_total", "game_sum_agreed_ca_right", "game_sum_agreed_ca_wrong", "game_sum_disagreed_ca_right", "game_sum_disagreed_ca_wrong_success", "game_sum_disagreed_ca_wrong_failure", "avg_task_load", "avg_trust", "avg_explanation"]
 
 
@@ -102,11 +110,11 @@ time_training_col = {'1': ["Training_C1_Q1_time_Page Submit", "Training_C1_Q2_ti
                      '5': ["Training_C35_Q1_time_Page Submit", "Training_C35_Q2_time_Page Submit", "Training_C35_Q3_time_Page Submit", "Training_C35_Q4_time_Page Submit"]}               
 
 
-sol_game = {1: [0, 0, 0, 2, 2, 3, 0, 2],
+sol_game = {1: [1, 0, 0, 1, 2, 3, 1, 1],
             2: [1, 4, 1, 0, 0, 0, 1, 2],
-            3: [2, 2, 3, 0, 0, 0, 2, 0],
-            4: [0, 0, 0, 1, 0, 4, 1, 3],
-            5: [2, 1, 1, 1, 1, 1, 1, 1],
+            3: [0, 1, 0, 1, 2, 3, 1, 1],
+            4: [0, 0, 0, 1, 2, 4, 2, 0],
+            5: [2, 1, 2, 1, 1, 1, 1, 0],
             6: [0, 2, 1, 1, 0, 3, 1, 1],
             7: [0, 1, 1, 1, 2, 1, 2, 1],
             8: [3, 2, 3, 1, 0, 0, 0, 0],
@@ -120,11 +128,11 @@ sol_training = {1: [0, 1, 0, 1, 0, 2, 0, 1],
                 4: [1, 1, 1, 0, 1, 0, 1, 0]}
 
 
-CA_game = {1: [0, 0, 0, 1, 2, 3, 0, 1],
+CA_game = {1: [1, 0, 0, 0, 2, 3, 1, 0],
            2: [0, 4, 1, 0, 0, 0, 0, 2],
-           3: [3, 3, 2, 0, 0, 0, 1, 0],
-           4: [0, 0, 0, 0, 0, 4, 1, 4],
-           5: [2, 1, 1, 1, 1, 1, 1, 2],
+           3: [1, 0, 1, 1, 2, 3, 0, 1],
+           4: [0, 0, 0, 0, 2, 4, 2, 1],
+           5: [2, 1, 2, 1, 1, 1, 1, 1],
            6: [1, 2, 1, 1, 0, 3, 1, 1],
            7: [0, 1, 1, 1, 2, 1, 2, 1],
            8: [3, 2, 3, 1, 0, 0, 0, 0],
@@ -163,7 +171,7 @@ This function Arranges and writes the data into a CSV in the following format:
    And overall success rate (out of 4 questions)
 3. Game - for each question:
    a. gameX_success - Whether succeded or not (boolean)
-   b. gameX_time - Time it took
+   b. gameX_time - time it took
    c. gameX_sum_identified - How many symbols identified in total (correct should be always 9)
    d. gameX_success_rate - how many symbols quantities (out of 8) were identified correctly
    e. gameX_success_distance - how distant is the participant answer from the correct answer (in Manhattan Distance) to estimate the proximity of the answer to the right answer.
@@ -189,16 +197,27 @@ def arrange_csv(data):
    for i in range(len(data)):
       row = data.iloc[i, :]
       case = str(row['cohort_num'])
-      new_row = [row['MTurk'], row['cohort_num']]
+      new_row = [row['MTurk'], row['cohort_num'], row['consent2'], row['gender'], row['nativeness']]
       training_success = 0
 
       for qnum in range(1, 5): #Adding training section
          answer = [int(row[cohort_training_col[(case, qnum)][i]]) for i in range(8)]
+         solution = sol_training[qnum]
+         
          new_row.append(sol_training[qnum] == answer)
          training_success += (sol_training[qnum] == answer)
          new_row.append(round(row[time_training_col[case][qnum - 1]], 2))
 
+         distance_vec = []
+
+         for x, y in zip(answer, solution): #adding letters individual distance
+              distance_vec.append(abs(x - y))
+        
+         new_row = new_row + distance_vec
+         new_row.append(sum(distance_vec)) 
+
       new_row.append(training_success) #adding overall training success
+
       sum_game_success = 0
       sum_ca_agreed = 0
       sum_ca_agreed_right = 0
@@ -224,8 +243,16 @@ def arrange_csv(data):
           new_row.append(game_time) #append 3b
          
           new_row.append(sum(answer)) #append 3c
+        
           new_row.append(sum(x==y for x, y in zip(answer, solution))) #append 3d
-          new_row.append(sum(abs(np.array(answer) - np.array(solution)))) #append 3e
+          
+          distance_vec = []
+
+          for x, y in zip(answer, solution): #adding letters individual distance
+              distance_vec.append(abs(x - y))
+        
+          new_row = new_row + distance_vec
+          new_row.append(sum(distance_vec)) #append 3e
           new_row.append(CA_game[qnum] == answer) #append 3f
         
           ca_agreed = int(CA_game[qnum] == answer)
@@ -252,7 +279,7 @@ def arrange_csv(data):
       rows.append(new_row)
 
    table = pd.DataFrame(rows)
-   table.to_csv("arrangedData.csv", header = False, index = False)
+   table.to_csv("processedData_v2_new.csv", header = False, index = False)
 
 arrange_csv(data)
 #correct_rate(data)
