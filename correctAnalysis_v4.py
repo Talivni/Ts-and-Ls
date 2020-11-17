@@ -3,7 +3,7 @@ import pandas as pd
 import re
 import matplotlib.pyplot as plt
 
-data = pd.read_csv("C:\\Users\\talil\\OneDrive\\Documents\\GitHub\\Ts-and-Ls\\raw_cohort4.csv")
+data = pd.read_csv("C:\\Users\\talil\\OneDrive\\Documents\\GitHub\\Ts-and-Ls\\raw_cohort5.csv")
 
 headers = ["ProlificID", "cohort", "consent", "gender", "age", "training1_success", "training1_time", "training1_dist_C", "training1_dist_E", "training1_dist_F", "training1_dist_L", "training1_dist_M", "training1_dist_N", "training1_dist_O", "training1_dist_T", "training1_sum_distance",
            "training2_success", "training2_time", "training2_dist_C", "training2_dist_E", "training2_dist_F", "training2_dist_L", "training2_dist_M", "training2_dist_N", "training2_dist_O", "training2_dist_T", "training2_sum_distance",
@@ -280,7 +280,7 @@ def arrange_csv(data):
       rows.append(new_row)
 
    table = pd.DataFrame(rows)
-   table.to_csv("processedData_c4.csv", header = False, index = False)
+   table.to_csv("processedData_c5.csv", header = False, index = False)
 
 arrange_csv(data)
 #correct_rate(data)
